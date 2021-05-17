@@ -1,5 +1,6 @@
 export * from './constants';
 export * from './clusterDetail';
+export * from './clusterConfiguration';
 export * from './clusters';
 export * from './hosts';
 export * from './ui';
