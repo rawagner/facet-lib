@@ -42,6 +42,7 @@ export type ClusterDeploymentNetworkingValues = NetworkConfigurationValues;
 export type ClusterDeploymentDetailsStepProps = ClusterDeploymentDetailsProps & {
   onSaveDetails: (values: ClusterDeploymentDetailsValues) => Promise<string | void>;
   onClose: () => void;
+  onValuesChange: (values: ClusterDeploymentDetailsValues) => void;
 };
 
 export type ClusterDeploymentDetailsNetworkingProps = {

@@ -4,12 +4,17 @@ import ClusterDetailsFormFields from '../clusterWizard/ClusterDetailsFormFields'
 import ClusterWizardStepHeader from '../clusterWizard/ClusterWizardStepHeader';
 import { OpenshiftVersionOptionType } from '../../types';
 import { Cluster } from '../../api';
+import { ClusterDeploymentDetailsValues } from './types';
+import { useFormikContext } from 'formik';
 
 const ClusterDeploymentDetails: React.FC<{
   defaultPullSecret: string;
   ocpVersions: OpenshiftVersionOptionType[];
   cluster?: Cluster;
-}> = ({ ocpVersions, defaultPullSecret, cluster }) => {
+  onValuesChange: (values: ClusterDeploymentDetailsValues) => void;
+}> = ({ ocpVersions, defaultPullSecret, cluster, onValuesChange }) => {
+  const { values } = useFormikContext<ClusterDeploymentDetailsValues>();
+  React.useEffect(() => onValuesChange(values), [values, onValuesChange]);
   const toggleRedHatDnsService = () => {
     console.error(
       'toggleRedHatDnsService() should not be called, managedDomains are recently not used.',

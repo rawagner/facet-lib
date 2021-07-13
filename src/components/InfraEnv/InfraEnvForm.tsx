@@ -107,7 +107,7 @@ const InfraEnvForm: React.FC<InfraEnvFormProps> = ({ usedNames, onSubmit, onClos
           await onSubmit(values);
           onFinish(values);
         } catch (e) {
-          setError(e?.message ?? 'An error occured');
+          setError(e?.message || 'An error occured');
         }
       }}
     >

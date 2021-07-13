@@ -6,16 +6,28 @@ import NetworkConfigurationFormFields from '../clusterConfiguration/NetworkConfi
 import { HostSubnets } from '../../types/clusters';
 import NetworkingHostsTable from '../hosts/NetworkingHostsTable';
 import ClusterDeploymentHostsTable from './ClusterDeploymentHostsTable';
-import { ClusterDeploymentHostsTablePropsActions } from './types';
+import {
+  ClusterDeploymentHostsTablePropsActions,
+  ClusterDeploymentNetworkingValues,
+} from './types';
+import { useFormikContext } from 'formik';
 
 const ClusterDeploymentNetworking: React.FC<
   {
     cluster: Cluster;
     hostSubnets: HostSubnets;
     defaultNetworkSettings: ClusterDefaultConfig;
-  } & ClusterDeploymentHostsTablePropsActions
-> = ({ cluster, hostSubnets, defaultNetworkSettings, ...rest }) => {
+  } & ClusterDeploymentHostsTablePropsActions & {
+      onValuesChange: (v: ClusterDeploymentNetworkingValues) => void;
+    }
+> = ({ cluster, hostSubnets, defaultNetworkSettings, onValuesChange, ...rest }) => {
   const isVipDhcpAllocationDisabled = true; // So far not supported
+
+  const { values } = useFormikContext<ClusterDeploymentNetworkingValues>();
+
+  React.useEffect(() => {
+    onValuesChange(values);
+  }, [values, onValuesChange]);
 
   return (
     <Grid hasGutter>
