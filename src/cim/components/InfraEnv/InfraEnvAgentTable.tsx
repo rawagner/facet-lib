@@ -1,5 +1,11 @@
 import * as React from 'react';
-import { AgentK8sResource } from '../../types';
+import {
+  AgentK8sResource,
+  BareMetalHostK8sResource,
+  InfraEnvK8sResource,
+  NMStateK8sResource,
+  SecretKind,
+} from '../../types';
 import { ClusterDeploymentHostsTablePropsActions } from '../ClusterDeployment/types';
 import {
   discoveryTypeColumn,
@@ -19,6 +25,10 @@ import {
 
 type InfraEnvAgentTable = ClusterDeploymentHostsTablePropsActions & {
   agents: AgentK8sResource[];
+  bareMetalHosts: BareMetalHostK8sResource[];
+  nmStates: NMStateK8sResource[];
+  secrets: SecretKind[];
+  infraEnv: InfraEnvK8sResource;
   getClusterDeploymentLink: (cd: { name: string; namespace: string }) => string;
   className?: string;
 };
@@ -27,13 +37,23 @@ const InfraEnvAgentTable: React.FC<InfraEnvAgentTable> = ({
   agents,
   className,
   getClusterDeploymentLink,
+  nmStates,
+  bareMetalHosts,
+  secrets,
+  infraEnv,
   ...actions
 }) => {
-  const [hosts, hostActions, actionResolver] = useAgentsTable(actions, agents);
+  const [hosts, hostActions, actionResolver] = useAgentsTable(actions, {
+    agents,
+    nmStates,
+    bmhs: bareMetalHosts,
+    secrets,
+    infraEnv,
+  });
   const content = React.useMemo(
     () => [
       hostnameColumn(hostActions.onEditHost),
-      discoveryTypeColumn(agents),
+      discoveryTypeColumn(agents, bareMetalHosts),
       statusColumn(agents, actions.onEditHost, actions.onApprove),
       clusterColumn(agents, getClusterDeploymentLink),
       discoveredAtColumn,
@@ -41,7 +61,7 @@ const InfraEnvAgentTable: React.FC<InfraEnvAgentTable> = ({
       memoryColumn,
       disksColumn,
     ],
-    [agents, actions, getClusterDeploymentLink, hostActions],
+    [agents, actions, getClusterDeploymentLink, hostActions, bareMetalHosts],
   );
   return (
     <HostsTable

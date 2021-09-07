@@ -4,8 +4,11 @@ import {
   AgentK8sResource,
   ClusterDeploymentK8sResource,
   AgentClusterInstallK8sResource,
+  SecretKind,
 } from '../../types';
+import { BareMetalHostK8sResource } from '../../types/k8s/bare-metal-host';
 import { ClusterImageSetK8sResource } from '../../types/k8s/cluster-image-set';
+import { NMStateK8sResource } from '../../types/k8s/nm-state';
 
 export type ClusterDeploymentHostsTablePropsActions = {
   canEditHost?: (agent: AgentK8sResource) => boolean;
@@ -16,6 +19,11 @@ export type ClusterDeploymentHostsTablePropsActions = {
   onDeleteHost?: (agent: AgentK8sResource) => void;
   onApprove?: (agent: AgentK8sResource) => void;
   onSelect?: (agent: AgentK8sResource, selected: boolean) => void;
+  onEditBMH?: (
+    bmh: BareMetalHostK8sResource,
+    secret: SecretKind,
+    nmState: NMStateK8sResource,
+  ) => void;
 };
 
 export type ClusterDeploymentWizardStepsType = 'cluster-details' | 'hosts-selection' | 'networking';
