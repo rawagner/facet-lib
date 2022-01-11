@@ -50,7 +50,7 @@ type HostsTableProps = {
   hosts: Host[];
   skipDisabled?: boolean;
   content: TableRow<Host>[];
-  actionResolver: ActionsResolver<Host>;
+  actionResolver?: ActionsResolver<Host>;
   children: React.ReactNode;
   onSelect?: (obj: Host, isSelected: boolean) => void;
   selectedIDs?: string[];
@@ -64,7 +64,7 @@ const HostsTable: React.FC<HostsTableProps & WithTestID> = ({
   children,
   content,
   actionResolver,
-  ExpandComponent = DefaultExpandComponent,
+  ExpandComponent,
   className,
   testId,
   onSelect,

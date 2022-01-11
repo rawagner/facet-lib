@@ -48,7 +48,7 @@ import { toSentence } from '../ui/table/utils';
 import { RenderIf } from '../ui';
 import { HostStatusProps } from './types';
 
-const getStatusIcon = (status: Host['status'] | 'discovered') => {
+export const getStatusIcon = (status: Host['status'] | 'discovered') => {
   let icon = null;
   switch (status) {
     case 'discovered':

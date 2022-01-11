@@ -150,6 +150,8 @@ export type InfraEnvAgentTableProps = ClusterDeploymentHostsTablePropsActions & 
   getClusterDeploymentLink: (cd: { name: string; namespace: string }) => string | React.ReactNode;
   className?: string;
   hideClusterColumn?: boolean;
+  onChangeHostname: (agent: AgentK8sResource, hostname: string) => Promise<AgentK8sResource>;
+  onApprove: (agents: AgentK8sResource[]) => Promise<AgentK8sResource>;
 };
 
 export type ClusterDeploymentHostsDiscoveryProps = {

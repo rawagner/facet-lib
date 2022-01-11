@@ -47,7 +47,7 @@ export type ExpandComponentProps<R> = {
 type HostsTable<R> = {
   data: R[];
   content: TableRow<R>[];
-  ExpandComponent: React.ComponentType<ExpandComponentProps<R>>;
+  ExpandComponent?: React.ComponentType<ExpandComponentProps<R>>;
   children: React.ReactNode;
   getDataId: (obj: R) => string;
   onSelect?: (obj: R, isSelected: boolean) => void;
@@ -71,7 +71,7 @@ const AITable = <R extends any>({
 }: WithTestID & HostsTable<R>) => {
   const [openRows, setOpenRows] = React.useState<OpenRows>({});
   const [sortBy, setSortBy] = React.useState<ISortBy>({
-    index: 1, // Hostname-column
+    index: ExpandComponent ? 1 : 0, // Hostname-column
     direction: SortByDirection.asc,
   });
 
@@ -109,7 +109,7 @@ const AITable = <R extends any>({
       .map((obj) => {
         const id = getDataId(obj);
         const cells = contentWithAdditions.filter((c) => !!c.cell).map((c) => c.cell?.(obj));
-        return [
+        const rows = [
           {
             // visible row
             isOpen: !!openRows[id],
@@ -118,7 +118,9 @@ const AITable = <R extends any>({
             obj,
             id,
           },
-          {
+        ];
+        if (ExpandComponent) {
+          rows.push({
             // expandable detail
             // parent will be set after sorting
             fullWidth: true,
@@ -128,12 +130,20 @@ const AITable = <R extends any>({
               },
             ],
             key: `${id}-detail`,
-          },
-        ];
+            // eslint-disable-next-line
+          } as any);
+        }
+        return rows;
       })
-      .sort(rowSorter(sortBy, (row: IRow, index = 1) => row[0].cells[index - 1]))
+      .sort(
+        rowSorter(sortBy, (row: IRow, index = 1) =>
+          ExpandComponent ? row[0].cells[index - 1] : row[0].cells[index],
+        ),
+      )
       .map((row: IRow, index: number) => {
-        row[1].parent = index * 2;
+        if (ExpandComponent) {
+          row[1].parent = index * 2;
+        }
         return row;
       }),
   );
@@ -175,7 +185,7 @@ const AITable = <R extends any>({
     <Table
       rows={rows}
       cells={columns}
-      onCollapse={onCollapse}
+      onCollapse={ExpandComponent ? onCollapse : undefined}
       variant={TableVariant.compact}
       aria-label="Hosts table"
       className={classnames(className, 'hosts-table')}
