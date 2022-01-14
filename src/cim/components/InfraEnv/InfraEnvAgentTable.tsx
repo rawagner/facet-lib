@@ -20,8 +20,8 @@ import {
 import { DiscoveryTroubleshootingModal } from '../../../common';
 import { TableRow } from '../../../common/components/hosts/AITable';
 import { InfraEnvAgentTableProps } from '../ClusterDeployment/types';
-import { AgentK8sResource } from '../../types/';
 import InfraEnvAgentTableToolbar from './InfraEnvAgentTableToolbar';
+import { Stack, StackItem } from '@patternfly/react-core';
 
 const InfraEnvAgentTable: React.FC<InfraEnvAgentTableProps> = ({
   agents,
@@ -30,19 +30,31 @@ const InfraEnvAgentTable: React.FC<InfraEnvAgentTableProps> = ({
   bareMetalHosts,
   infraEnv,
   hideClusterColumn,
-  onApprove,
   onChangeHostname,
   ...actions
 }) => {
   const [isDiscoveryHintModalOpen, setDiscoveryHintModalOpen] = React.useState(false);
   const [selectedAgents, setSelectedAgents] = React.useState<string[]>([]);
-  const onSelect = (obj: AgentK8sResource, isSelected: boolean) => {
+  const onSelect = (obj: Host, isSelected: boolean) => {
     if (isSelected) {
-      setSelectedAgents([...selectedAgents, obj.metadata?.uid || '']);
+      setSelectedAgents([...selectedAgents, obj.id]);
     } else {
-      setSelectedAgents(selectedAgents.filter((sa) => sa !== obj.metadata?.uid));
+      setSelectedAgents(selectedAgents.filter((sa) => sa !== obj.id));
     }
   };
+
+  React.useEffect(() => {
+    const agentsToRemove: string[] = [];
+    selectedAgents.forEach((uid) => {
+      const matchedAgent = [...agents, ...bareMetalHosts].find((a) => a.metadata?.uid === uid);
+      if (!matchedAgent) {
+        agentsToRemove.push(uid);
+      }
+    });
+    if (agentsToRemove.length) {
+      setSelectedAgents(selectedAgents.filter((sa) => !agentsToRemove.includes(sa)));
+    }
+  }, [bareMetalHosts, agents, selectedAgents]);
 
   const [hosts, hostActions, actionResolver] = useAgentsTable(actions, {
     agents,
@@ -70,34 +82,31 @@ const InfraEnvAgentTable: React.FC<InfraEnvAgentTableProps> = ({
   );
   return (
     <>
-      <InfraEnvAgentTableToolbar
-        agents={agents}
-        selectedAgents={selectedAgents}
-        onSelectAll={() => setSelectedAgents(agents.map((ia) => ia.metadata?.uid || ''))}
-        onSelectNone={() => setSelectedAgents([])}
-        onApprove={onApprove}
-        onChangeHostname={onChangeHostname}
-      />
-      <HostsTable
-        hosts={hosts}
-        content={content}
-        actionResolver={actionResolver}
-        className={className}
-        selectedIDs={selectedAgents}
-        onSelect={
-          onSelect
-            ? (obj, isSelected) => {
-                const agent = agents.find((a) => a.metadata?.uid === obj.id);
-                if (agent) {
-                  onSelect(agent, isSelected);
-                }
-              }
-            : undefined
-        }
-        ExpandComponent={DefaultExpandComponent}
-      >
-        <HostsTableEmptyState setDiscoveryHintModalOpen={setDiscoveryHintModalOpen} />
-      </HostsTable>
+      <Stack hasGutter>
+        <StackItem>
+          <InfraEnvAgentTableToolbar
+            agents={agents}
+            selectedAgents={selectedAgents}
+            onSelectAll={() => setSelectedAgents(hosts.map((ia) => ia.id || ''))}
+            onSelectNone={() => setSelectedAgents([])}
+            onApprove={actions.onApprove}
+            onChangeHostname={onChangeHostname}
+          />
+        </StackItem>
+        <StackItem>
+          <HostsTable
+            hosts={hosts}
+            content={content}
+            actionResolver={actionResolver}
+            className={className}
+            selectedIDs={selectedAgents}
+            onSelect={onSelect}
+            ExpandComponent={DefaultExpandComponent}
+          >
+            <HostsTableEmptyState setDiscoveryHintModalOpen={setDiscoveryHintModalOpen} />
+          </HostsTable>
+        </StackItem>
+      </Stack>
       <DiscoveryTroubleshootingModal
         isOpen={isDiscoveryHintModalOpen}
         setDiscoveryHintModalOpen={setDiscoveryHintModalOpen}
