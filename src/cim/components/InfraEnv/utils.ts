@@ -4,7 +4,7 @@ import {
   InfraEnvK8sResource,
   SecretK8sResource,
 } from '../../types';
-import { EnvironmentStepFormValues } from './InfraEnvFormPage';
+import { EnvironmentStepFormValues } from './CreateWizard/InfraEnvFormPage';
 import { getClusterDeploymentResource } from '../helpers';
 import { AGENT_LOCATION_LABEL_KEY } from '../common';
 

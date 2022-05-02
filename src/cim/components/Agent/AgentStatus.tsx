@@ -5,9 +5,9 @@ import { AgentK8sResource } from '../../types';
 import { AgentTableActions, ClusterDeploymentWizardStepsType } from '../ClusterDeployment/types';
 import { getAIHosts } from '../helpers/toAssisted';
 import { getAgentStatus, getWizardStepAgentStatus } from '../helpers/status';
+import { AdditionalNTPSourcesDialogToggle } from './AdditionalNTPSourcesDialogToggle';
 
 import '@patternfly/react-styles/css/utilities/Text/text.css';
-import { AdditionalNTPSourcesDialogToggle } from '../ClusterDeployment/AdditionalNTPSourcesDialogToggle';
 
 export type AgentStatusProps = {
   agent: AgentK8sResource;

@@ -20,7 +20,7 @@ import {
 import {
   ClusterWizardStepsType,
   wizardStepsValidationsMap,
-} from '../ClusterDeployment/wizardTransition';
+} from '../ClusterDeployment/CreateWizard/wizardTransition';
 import { HostStatusDef } from '../../../common';
 import { agentStatus, bmhStatus } from './agentStatus';
 

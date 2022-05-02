@@ -15,7 +15,7 @@ import {
 import { Formik, FormikConfig, FormikProps } from 'formik';
 import { AgentK8sResource } from '../../types/k8s/agent';
 import { ClusterDeploymentK8sResource } from '../../types/k8s/cluster-deployment';
-import ScaleUpForm from '../ClusterDeployment/ScaleUpForm';
+import ScaleUpForm from '../ClusterDeployment/ScaleUp/ScaleUpForm';
 import { getAgentSelectorFieldsFromAnnotations } from '../helpers/clusterDeployment';
 import { ScaleUpFormValues } from '../ClusterDeployment/types';
 import EditAgentModal from './EditAgentModal';

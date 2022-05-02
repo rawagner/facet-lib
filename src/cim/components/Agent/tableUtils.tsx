@@ -19,7 +19,7 @@ import { getAgentClusterInstallOfAgent, getAIHosts, getInfraEnvNameOfAgent } fro
 import { isInstallationInProgress } from '../ClusterDeployment/helpers';
 import { AGENT_BMH_NAME_LABEL_KEY } from '../common';
 import { BareMetalHostK8sResource } from '../../types/k8s/bare-metal-host';
-import BMHStatus from './BMHStatus';
+import BMHStatus from '../BareMetalHost/BMHStatus';
 import { getAgentStatus, getBMHStatus, getWizardStepAgentStatus } from '../helpers/status';
 import { filterByHostname } from '../../../common/components/hosts/utils';
 import { agentStatus, bmhStatus } from '../helpers/agentStatus';

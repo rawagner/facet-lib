@@ -1,5 +1,5 @@
 import { DiscoveryImageFormValues } from '../../../common';
-import { BMCFormProps } from '../Agent/types';
+import { BMCFormProps } from '../BareMetalHost/types';
 import {
   BareMetalHostK8sResource,
   NMStateK8sResource,

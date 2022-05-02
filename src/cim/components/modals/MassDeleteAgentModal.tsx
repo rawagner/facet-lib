@@ -21,7 +21,7 @@ import {
 import { useAgentsTable } from '../Agent/tableUtils';
 import { AGENT_BMH_NAME_LABEL_KEY } from '../common/constants';
 import AgentStatus from '../Agent/AgentStatus';
-import BMHStatus from '../Agent/BMHStatus';
+import BMHStatus from '../BareMetalHost/BMHStatus';
 import { getBMHStatus, getAgentStatus } from '../helpers';
 import { usePagination } from '../../../common/components/hosts/usePagination';
 
