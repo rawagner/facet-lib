@@ -10,11 +10,11 @@ export const getNodepoolAgents = (
   const nodePoolAgentMachines = agentMachines
     .filter(
       (am) =>
-        am.metadata?.labels?.[
-          `${hostedCluster.metadata?.name || ''}-${hostedCluster.metadata?.namespace || ''}-${
-            nodePool.metadata?.name || ''
-          }`
-        ] &&
+        am.metadata?.namespace ===
+          `${hostedCluster.metadata?.namespace || ''}-${hostedCluster.metadata?.name || ''}` &&
+        am.metadata?.labels?.['cluster.x-k8s.io/cluster-name'] === hostedCluster.metadata?.name &&
+        am.metadata?.annotations?.['cluster.x-k8s.io/cloned-from-name'] ===
+          nodePool.metadata?.name &&
         am.status?.agentRef?.name &&
         am.status?.agentRef?.namespace,
     )
