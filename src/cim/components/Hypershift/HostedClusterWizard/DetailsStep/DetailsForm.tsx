@@ -8,6 +8,7 @@ import {
   PullSecret,
 } from '../../../../../common';
 import { useTranslation } from '../../../../../common/hooks/use-translation-wrapper';
+import { getErrorMessage } from '../../../../../common/utils';
 import { getOCPVersions } from '../../../helpers';
 import { useTemptiflySync } from '../../hooks/useTemptiflySync';
 import { DetailsFormProps, DetailsFormValues } from './types';
@@ -16,6 +17,7 @@ const DetailsForm: React.FC<DetailsFormProps> = ({
   onValuesChanged,
   extensionAfter,
   clusterImages,
+  supportedVersionsCM,
 }) => {
   const { values } = useFormikContext<DetailsFormValues>();
   useTemptiflySync({ values, onValuesChanged });
@@ -25,7 +27,17 @@ const DetailsForm: React.FC<DetailsFormProps> = ({
     nameInputRef.current?.focus();
   }, []);
 
-  const ocpVersions = React.useMemo(() => getOCPVersions(clusterImages), [clusterImages]);
+  let ocpVersions = React.useMemo(() => getOCPVersions(clusterImages), [clusterImages]);
+
+  if (supportedVersionsCM?.data?.versions) {
+    try {
+      const versions = JSON.parse(supportedVersionsCM.data.versions) as string[];
+      ocpVersions = ocpVersions.filter((v) => versions.find((sv) => v.version.startsWith(sv)));
+    } catch (err) {
+      console.error('Could not parse supported versions config map value.', getErrorMessage(err));
+    }
+  }
+
   const { t } = useTranslation();
   return (
     <Form>
