@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FieldArray, useFormikContext } from 'formik';
-import { SelectField } from '../../../../../common';
+import { PopoverIcon, SelectField } from '../../../../../common';
 import { useTemptiflySync } from '../../hooks/useTemptiflySync';
 import { HostsFormValues, HostsFormProps, NodePoolFormValue } from './types';
 import { Alert, Button, Form, Grid, GridItem } from '@patternfly/react-core';
@@ -46,6 +46,14 @@ const HostsForm: React.FC<HostsFormProps> = ({
             options={infraEnvOptions}
             isRequired
             isDisabled={!infraEnvs.length}
+            labelIcon={
+              <PopoverIcon
+                position="right"
+                bodyContent={t(
+                  'ai:A host namespace may be comprised of multiple infrastructure environments, in which the hosts are stored.',
+                )}
+              />
+            }
           />
         </GridItem>
         {totalHosts === 0 && (
@@ -53,7 +61,7 @@ const HostsForm: React.FC<HostsFormProps> = ({
             <Alert
               isInline
               variant="warning"
-              title={t('ai: The cluster has 0 hosts. No workloads will be able to run.')}
+              title={t('ai:The cluster has 0 hosts. No workloads will be able to run.')}
             />
           </GridItem>
         )}

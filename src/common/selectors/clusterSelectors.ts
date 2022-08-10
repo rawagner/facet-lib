@@ -1,7 +1,7 @@
 import head from 'lodash/fp/head';
-import { stringToJSON } from '../api/utils';
 import { CpuArchitecture, ValidationsInfo } from '../types';
-import { Cluster } from '../api/types';
+import { Cluster, stringToJSON } from '../api';
+import { OPERATOR_NAME_ODF } from '../config';
 
 export const selectMachineNetworkCIDR = ({
   machineNetworks,
@@ -34,6 +34,16 @@ export const selectMonitoredOperators = (cluster?: Pick<Cluster, 'monitoredOpera
 
 export const selectOlmOperators = (cluster?: Pick<Cluster, 'monitoredOperators'>) => {
   return selectMonitoredOperators(cluster).filter((operator) => operator.operatorType === 'olm');
+};
+
+export const hasODFOperators = (cluster: Pick<Cluster, 'monitoredOperators'>) => {
+  return selectMonitoredOperators(cluster).some(
+    (operator) => operator.name && operator.name === OPERATOR_NAME_ODF,
+  );
+};
+
+export const isCompact = (cluster: Pick<Cluster, 'hosts'>) => {
+  return !cluster.hosts || cluster.hosts.length <= 3;
 };
 
 export const isSNO = ({ highAvailabilityMode }: Partial<Cluster>) =>
@@ -89,3 +99,23 @@ export const selectIpv6HostPrefix = ({ clusterNetworks }: Pick<Cluster, 'cluster
 
 export const isArmArchitecture = ({ cpuArchitecture }: Pick<Cluster, 'cpuArchitecture'>) =>
   cpuArchitecture === CpuArchitecture.ARM;
+
+const getOldSchedulableMastersAlwaysOn = (cluster: Cluster) => {
+  return cluster.hosts ? cluster.hosts.length < 5 : true;
+};
+
+export const selectMastersMustRunWorkloads = (cluster: Cluster): boolean => {
+  // TODO camador 2022-06-30 Remove the logic for old schedulableMasters logic after a few weeks
+  // as by then all clusters should have the new field "schedulableMastersForcedTrue"
+  if (cluster.schedulableMastersForcedTrue === undefined) {
+    return getOldSchedulableMastersAlwaysOn(cluster);
+  }
+  return cluster.schedulableMastersForcedTrue;
+};
+
+export const selectSchedulableMasters = (cluster: Cluster): boolean => {
+  if (selectMastersMustRunWorkloads(cluster)) {
+    return true;
+  }
+  return cluster.schedulableMasters || false;
+};

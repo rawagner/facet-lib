@@ -4,7 +4,7 @@ import { ActionListItem, Button, ButtonVariant, Grid, GridItem } from '@patternf
 import { Cluster, ClusterWizardStepHeader, useAlerts, ClusterWizardStep } from '../../../common';
 import { useClusterWizardContext } from '../clusterWizard/ClusterWizardContext';
 import { getApiErrorMessage, handleApiError } from '../../api';
-import { updateCluster } from '../../reducers/clusters/currentClusterSlice';
+import { updateCluster } from '../../reducers/clusters';
 import ClusterWizardFooter from '../clusterWizard/ClusterWizardFooter';
 import ClusterWizardNavigation from '../clusterWizard/ClusterWizardNavigation';
 import ReviewCluster from './ReviewCluster';
@@ -71,21 +71,6 @@ const ReviewStep: React.FC<{ cluster: Cluster }> = ({ cluster }) => {
         <GridItem>
           <ReviewCluster cluster={cluster} />
         </GridItem>
-
-        {/* TODO(mlibra): Implement in context of the initial configuration selection
-        <GridItem span={12} lg={10} xl={9} xl2={7}>
-          <TextContent>
-            <Text component="h2">Capability level</Text>
-          </TextContent>
-        </GridItem>
-        */}
-
-        {/* TODO(mlibra): Show YAML manifests
-         <GridItem span={12} lg={10} xl={9} xl2={7}>
-         <ExpandableSection>
-         </ExpandableSection>
-         </GridItem>
-        */}
       </Grid>
     </ClusterWizardStep>
   );
