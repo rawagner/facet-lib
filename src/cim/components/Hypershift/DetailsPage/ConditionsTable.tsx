@@ -18,6 +18,8 @@ type ConditionsTableProps = {
   }[];
 };
 
+const conds = ['ReconciliationPaused'];
+
 const ConditionsTable = ({ conditions }: ConditionsTableProps) => {
   const { t } = useTranslation();
   return (
@@ -31,10 +33,18 @@ const ConditionsTable = ({ conditions }: ConditionsTableProps) => {
       <Tbody>
         {conditions?.map((c) => {
           let icon = <UnknownIcon />;
-          if (c.status === 'True') {
-            icon = <CheckCircleIcon color={okColor.value} />;
-          } else if (c.status === 'False') {
-            icon = <ExclamationCircleIcon color={dangerColor.value} size="sm" />;
+          if (conds.includes(c.type)) {
+            if (c.status === 'False') {
+              icon = <CheckCircleIcon color={okColor.value} />;
+            } else if (c.status === 'True') {
+              icon = <ExclamationCircleIcon color={dangerColor.value} size="sm" />;
+            }
+          } else {
+            if (c.status === 'True') {
+              icon = <CheckCircleIcon color={okColor.value} />;
+            } else if (c.status === 'False') {
+              icon = <ExclamationCircleIcon color={dangerColor.value} size="sm" />;
+            }
           }
           return (
             <Tr key={c.type} className="ai-conditions-table__no-border">
