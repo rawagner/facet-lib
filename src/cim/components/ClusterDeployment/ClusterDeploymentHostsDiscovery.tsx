@@ -66,10 +66,12 @@ const ClusterDeploymentHostsDiscovery: React.FC<ClusterDeploymentHostsDiscoveryP
       <GridItem>
         <TextContent>
           <Text component="h3">{t('ai:Information and warnings')}</Text>
+          {aiConfigMap && (
+            <Text component="p">
+                <MinimalHWRequirements aiConfigMap={aiConfigMap} isSNOCluster={isSNOCluster} />
+            </Text>
+          )}
           <Text component="p">
-            {aiConfigMap && (
-              <MinimalHWRequirements aiConfigMap={aiConfigMap} isSNOCluster={isSNOCluster} />
-            )}
             <HostsNotShowingLink setDiscoveryHintModalOpen={setDiscoveryHintModalOpen} />
           </Text>
           {isVM && <VMRebootConfigurationInfo />}

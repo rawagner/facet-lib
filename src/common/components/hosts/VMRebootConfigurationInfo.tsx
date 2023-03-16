@@ -11,6 +11,7 @@ import { InfoCircleIcon } from '@patternfly/react-icons';
 import { Trans } from 'react-i18next';
 import { PrismCode } from '../../../common/components/ui';
 import { useTranslation } from '../../hooks/use-translation-wrapper';
+import { Trans } from 'react-i18next';
 
 export const VMRebootConfigurationContent = () => {
   const { t } = useTranslation();
@@ -28,12 +29,20 @@ export const VMRebootConfigurationContent = () => {
         {t('ai:If not, please start your VMs with the following configuration:')}
       </Text>
       <PrismCode code="--events on_reboot=restart" />
+<<<<<<< Updated upstream
       <Trans
         t={t}
         components={{ code: <code /> }}
         i18nKey="ai:When using <code>{{executionCommand}}</code>, please run:"
         values={{ executionCommand: 'virt-install' }}
       />
+=======
+      <Text component={TextVariants.p}>
+        <Trans t={t}>
+          ai:When using <code>virt-install</code>, please run:
+        </Trans>
+      </Text>
+>>>>>>> Stashed changes
       <PrismCode code="virt-install --wait -1 <rest of the command>" />
       <Text component={TextVariants.p}>
         {t('ai:Otherwise, the VMs will not be able to reboot during the installation process.')}

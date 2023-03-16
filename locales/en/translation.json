@@ -757,7 +757,13 @@
   "ai:Waiting for hosts...": "Waiting for hosts...",
   "ai:Warning": "Warning",
   "ai:Web Console URL": "Web Console URL",
+<<<<<<< Updated upstream
   "ai:When using <code>{{executionCommand}}</code>, please run:": "When using <code>{{executionCommand}}</code>, please run:",
+=======
+  "ai:When using <1>virt-install</1>, please run:": "When using <1>virt-install</1>, please run:",
+  "ai:With BMC form": "With BMC form",
+  "ai:With Discovery ISO": "With Discovery ISO",
+>>>>>>> Stashed changes
   "ai:Worker": "Worker",
   "ai:Worker_plural": "Workers",
   "ai:Worker Hosts Labels": "Worker Hosts Labels",
