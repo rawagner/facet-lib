@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { Skeleton } from '@patternfly/react-core';
 import './AsyncMessagePlaceholder.scss';
 

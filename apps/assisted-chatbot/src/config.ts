@@ -13,8 +13,7 @@ const parseEnvQueryParam = (): string | undefined => {
 };
 
 export const getBaseUrl = (): string => {
-  const queryEnv =
-    parseEnvQueryParam() || localStorage.getItem(ENV_OVERRIDE_LOCALSTORAGE_KEY);
+  const queryEnv = parseEnvQueryParam() || localStorage.getItem(ENV_OVERRIDE_LOCALSTORAGE_KEY);
   if (queryEnv && envs[queryEnv]) {
     localStorage.setItem(ENV_OVERRIDE_LOCALSTORAGE_KEY, queryEnv);
     return envs[queryEnv];

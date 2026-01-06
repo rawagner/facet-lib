@@ -21,7 +21,7 @@
   "packageManager": "yarn@3.4.1",
   "private": true,
   "resolutions": {
-    "tabbable": "^6.2.0"
+    "@types/react": "17.0.x"
   },
   "scripts": {
     "_build:lib": "yarn workspace @openshift-assisted/ui-lib build && yarn workspace @openshift-assisted/chatbot build",
