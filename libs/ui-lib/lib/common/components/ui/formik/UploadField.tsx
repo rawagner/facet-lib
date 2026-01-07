@@ -12,7 +12,7 @@ import { getFieldId } from './utils';
 import { useTranslation } from '../../../hooks/use-translation-wrapper';
 import { ExclamationCircleIcon } from '@patternfly/react-icons/dist/js/icons/exclamation-circle-icon';
 
-const UploadField: React.FC<UploadFieldProps> = ({
+const UploadField: React.FC<React.PropsWithChildren<UploadFieldProps>> = ({
   label,
   labelIcon,
   helperText,

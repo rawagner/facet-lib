@@ -7,7 +7,7 @@ import {
   HelperTextItem,
   Label,
 } from '@patternfly/react-core';
-import TagsInput from 'react-tagsinput';
+import RawTagsInput, { ReactTagsInputProps } from 'react-tagsinput';
 import { InputFieldProps } from './types';
 import { getFieldId } from './utils';
 
@@ -30,6 +30,11 @@ type LabelFieldProps = InputFieldProps & {
   // eslint-disable-next-line
   onChange?: (tags: any[]) => void;
 };
+
+// eslint-disable-next-line
+const TagsInput = RawTagsInput as any as React.ComponentType<
+  React.PropsWithChildren<ReactTagsInputProps>
+>;
 
 export const LabelField: React.FC<LabelFieldProps> = ({
   label,

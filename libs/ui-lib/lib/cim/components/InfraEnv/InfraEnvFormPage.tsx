@@ -130,7 +130,7 @@ type InfraEnvFormProps = {
   osImages?: OsImage[];
 };
 
-const InfraEnvForm: React.FC<InfraEnvFormProps> = ({
+const InfraEnvForm: React.FC<React.PropsWithChildren<InfraEnvFormProps>> = ({
   onValuesChanged,
   children,
   pullSecret,
@@ -286,7 +286,7 @@ type InfraEnvFormPageProps = InfraEnvFormProps & {
   osImages?: OsImage[];
 };
 
-export const InfraEnvFormPage: React.FC<InfraEnvFormPageProps> = ({
+export const InfraEnvFormPage: React.FC<React.PropsWithChildren<InfraEnvFormPageProps>> = ({
   usedNames,
   onSubmit,
   onClose,

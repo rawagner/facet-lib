@@ -5,7 +5,8 @@
     "noEmit": false,
     "resolveJsonModule": true,
     "rootDirs": ["@types", "lib"],
-    "tsBuildInfoFile": "node_modules/.cache/tsc/tsconfig.tsbuildinfo"
+    "tsBuildInfoFile": "node_modules/.cache/tsc/tsconfig.tsbuildinfo",
+    "skipLibCheck": true
   },
   "include": ["@types/*.d.ts", "lib/**/*.json"]
 }

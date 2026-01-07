@@ -4,7 +4,8 @@
     "incremental": true,
     "noEmit": false,
     "resolveJsonModule": true,
-    "tsBuildInfoFile": "node_modules/.cache/tsc/tsconfig.tsbuildinfo"
+    "tsBuildInfoFile": "node_modules/.cache/tsc/tsconfig.tsbuildinfo",
+    "skipLibCheck": true
   },
   "include": ["*.d.ts"]
 }
